@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri-Dhanya Hub - Firebase Setup</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #558B2F 0%, #33691E 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #558B2F;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .status.loading {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        .status.success {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        .status.error {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        button {
+            background: #558B2F;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100%;
+        }
+        button:hover {
+            background: #33691E;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 16px;
+            background: #FAFAF8;
+            border-left: 4px solid #558B2F;
+            border-radius: 4px;
+        }
+        .code {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌾 Siri-Dhanya Hub - Firebase Setup</h1>
+        
+        <div id="status" class="status" style="display: none;"></div>
+
+        <div class="step">
+            <h3>Step 1: Initialize Firebase</h3>
+            <p>Click to connect to your Firebase database:</p>
+            <button onclick="initFirebase()" id="initBtn">🔥 Connect to Firebase</button>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Add Sample Data</h3>
+            <p>This will populate your database with mock data:</p>
+            <button onclick="addSampleData()" id="addBtn" disabled>📊 Add Sample Data</button>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: View Live App</h3>
+            <p>Your app will now show real data from Firebase:</p>
+            <button onclick="window.location.href='https://sakshi8365.github.io/sridhanyahub/demo.html'" id="viewBtn" disabled>👁️ View Live App</button>
+        </div>
+
+        <div class="step">
+            <h3>Data Structure Added:</h3>
+            <div class="code">
+- prices/ (Millet prices by city)
+- recipes/ (Traditional recipes)
+- health/ (Health benefits)
+- fpo/ (Farmer Producer Organizations)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCx5Fc5lOlv_he1yKyMdZKisJ32xw_dUwc",
+          authDomain: "sridhanyahub.firebaseapp.com",
+          databaseURL: "https://sridhanyahub-default-rtdb.firebaseio.com",
+          projectId: "sridhanyahub",
+          storageBucket: "sridhanyahub.firebasestorage.app",
+          messagingSenderId: "640498166574",
+          appId: "1:640498166574:web:c057ccbd6a2486988fa8bf"
+        };
+
+        let db;
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+            statusDiv.style.display = 'block';
+        }
+
+        function initFirebase() {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+                showStatus('✅ Connected to Firebase!', 'success');
+                document.getElementById('addBtn').disabled = false;
+                document.getElementById('initBtn').disabled = true;
+            } catch (e) {
+                showStatus('❌ Error: ' + e.message, 'error');
+            }
+        }
+
+        function addSampleData() {
+            if (!db) {
+                showStatus('❌ Please connect to Firebase first', 'error');
+                return;
+            }
+
+            showStatus('⏳ Adding data...', 'loading');
+
+            const sampleData = {
+                prices: {
+                    1: { id: 1, millet: 'Navane', city: 'Bengaluru', price: 45.50, low: 42.00, high: 48.75, change: 3.2, trend: 'up' },
+                    2: { id: 2, millet: 'Sajje', city: 'Davangere', price: 38.00, low: 35.50, high: 40.00, change: 2.5, trend: 'up' },
+                    3: { id: 3, millet: 'Baragu', city: 'Mysore', price: 52.00, low: 50.00, high: 55.50, change: -1.5, trend: 'down' },
+                    4: { id: 4, millet: 'Jowar', city: 'Hubballi', price: 41.25, low: 40.00, high: 43.00, change: 0.5, trend: 'stable' },
+                    5: { id: 5, millet: 'Navane', city: 'Mysore', price: 43.75, low: 41.00, high: 47.00, change: 2.8, trend: 'up' }
+                },
+                recipes: {
+                    1: {
+                        id: 1, name: 'Navane Uppitu', millet: 'Navane',
+                        desc: 'Traditional breakfast dish with roasted Navane flour',
+                        ingredients: ['Navane flour', 'Ghee', 'Onions', 'Green chili', 'Salt'],
+                        time: 20, servings: 4, difficulty: 'easy'
+                    },
+                    2: {
+                        id: 2, name: 'Sajje Ambali', millet: 'Sajje',
+                        desc: 'Cooling fermented drink perfect for summer',
+                        ingredients: ['Sajje flour', 'Yogurt', 'Cumin seeds', 'Water', 'Salt'],
+                        time: 15, servings: 2, difficulty: 'medium'
+                    },
+                    3: {
+                        id: 3, name: 'Baragu Roti', millet: 'Baragu',
+                        desc: 'Nutritious flatbread with finger millet',
+                        ingredients: ['Baragu flour', 'Salt', 'Water', 'Oil'],
+                        time: 25, servings: 4, difficulty: 'easy'
+                    }
+                },
+                health: {
+                    1: {
+                        millet: 'Navane',
+                        title: 'Why Navane is Good for Diabetics',
+                        benefits: ['Low Glycemic Index (GI) prevents blood sugar spikes', 'High fiber content aids glucose regulation', 'Rich in antioxidants', 'Contains manganese for metabolism'],
+                        facts: ['Navane has GI of only 54 (vs rice 73)', '100g provides 6.7g fiber - crucial for diabetic management']
+                    },
+                    2: {
+                        millet: 'Baragu',
+                        title: 'Baragu - Superfood for Strong Bones',
+                        benefits: ['Highest calcium among millets (344mg per 100g)', 'Prevents osteoporosis', 'Rich in phosphorus', 'Beneficial for children\'s growth'],
+                        facts: ['Contains 10x more calcium than rice', 'Better absorbed than fortified milk']
+                    },
+                    3: {
+                        millet: 'Sajje',
+                        title: 'Sajje - Climate Champion & Nutrition Hero',
+                        benefits: ['Climate resilient - thrives in drought', 'Complete protein source (11g per 100g)', 'High in magnesium for heart health', 'Supports immune system'],
+                        facts: ['Requires 70% less water than paddy', '100g provides complete plant protein']
+                    }
+                },
+                fpo: {
+                    1: {
+                        name: 'Davangere Millet Farmers Cooperative',
+                        location: 'Davangere',
+                        contact: '9876543210',
+                        specialties: ['Navane', 'Sajje', 'Jowar'],
+                        cert: 'Organic'
+                    },
+                    2: {
+                        name: 'Bengaluru Urban Farming Network',
+                        location: 'Bengaluru',
+                        contact: '9876543211',
+                        specialties: ['Navane', 'Baragu'],
+                        cert: 'Fair Trade'
+                    },
+                    3: {
+                        name: 'Mysore Millet Heritage',
+                        location: 'Mysore',
+                        contact: '9876543212',
+                        specialties: ['Baragu', 'Sajje'],
+                        cert: 'Heritage'
+                    }
+                }
+            };
+
+            db.ref().set(sampleData, (error) => {
+                if (error) {
+                    showStatus('❌ Error adding data: ' + error.message, 'error');
+                } else {
+                    showStatus('✅ Sample data added successfully! Your app now has real data.', 'success');
+                    document.getElementById('addBtn').disabled = true;
+                    document.getElementById('viewBtn').disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
