@@ -1,0 +1,24 @@
+{
+  "project_info": {
+    "project_number": "640498166574",
+    "project_id": "sridhanyahub",
+    "storage_bucket": "sridhanyahub.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640498166574:android:c057ccbd6a2486988fa8bf",
+        "android_client_info": {
+          "package_name": "com.agriculture.siridhanya"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx5Fc5lOlv_he1yKyMdZKisJ32xw_dUwc"
+        }
+      ],
+      "services": {}
+    }
+  ],
+  "configuration_version": "1"
+}
