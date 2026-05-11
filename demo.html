@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siri-Dhanya Hub - Live Demo</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
     <style>
         * {
             margin: 0;
@@ -434,7 +437,22 @@
     </div>
 
     <script>
-        // Mock Data
+        // Firebase Configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCx5Fc5lOlv_he1yKyMdZKisJ32xw_dUwc",
+          authDomain: "sridhanyahub.firebaseapp.com",
+          databaseURL: "https://sridhanyahub-default-rtdb.firebaseio.com",
+          projectId: "sridhanyahub",
+          storageBucket: "sridhanyahub.firebasestorage.app",
+          messagingSenderId: "640498166574",
+          appId: "1:640498166574:web:c057ccbd6a2486988fa8bf"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Mock Data (Fallback if Firebase is empty)
         const mockPrices = [
             { id: 1, millet: 'Navane', city: 'Bengaluru', price: 45.50, low: 42.00, high: 48.75, change: 3.2, trend: 'up' },
             { id: 2, millet: 'Sajje', city: 'Davangere', price: 38.00, low: 35.50, high: 40.00, change: 2.5, trend: 'up' },
@@ -564,113 +582,149 @@
         }
 
         function renderPrices() {
-            let filtered = mockPrices.filter(p => p.city === currentCity && (!currentMillet || p.millet === currentMillet));
-            const html = filtered.map(p => `
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div class="card-title">${p.millet}</div>
-                            <div class="card-subtitle">${p.city}</div>
+            db.ref('prices').once('value', snapshot => {
+                let priceData = [];
+                if (snapshot.exists()) {
+                    priceData = Object.values(snapshot.val());
+                } else {
+                    priceData = mockPrices;
+                }
+                
+                let filtered = priceData.filter(p => p.city === currentCity && (!currentMillet || p.millet === currentMillet));
+                const html = filtered.map(p => `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div class="card-title">${p.millet}</div>
+                                <div class="card-subtitle">${p.city}</div>
+                            </div>
+                            <div class="trend-badge trend-${p.trend}">${p.trend === 'up' ? '📈' : p.trend === 'down' ? '📉' : '➡️'}</div>
                         </div>
-                        <div class="trend-badge trend-${p.trend}">${p.trend === 'up' ? '📈' : p.trend === 'down' ? '📉' : '➡️'}</div>
+                        <div class="price-display">₹${p.price.toFixed(2)}/kg</div>
+                        <div style="color: ${p.change > 0 ? '#4CAF50' : p.change < 0 ? '#F44336' : '#757575'}; font-weight: bold;">
+                            ${p.change > 0 ? '+' : ''}${p.change.toFixed(1)}%
+                        </div>
+                        <div class="price-range">
+                            <div class="range-item">
+                                <div class="range-label">7-Day Low</div>
+                                <div class="range-value" style="color: #F44336;">₹${p.low}</div>
+                            </div>
+                            <div class="range-item">
+                                <div class="range-label">Range</div>
+                                <div class="range-value" style="color: #558B2F;">₹${(p.high - p.low).toFixed(2)}</div>
+                            </div>
+                            <div class="range-item">
+                                <div class="range-label">7-Day High</div>
+                                <div class="range-value" style="color: #4CAF50;">₹${p.high}</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="price-display">₹${p.price.toFixed(2)}/kg</div>
-                    <div style="color: ${p.change > 0 ? '#4CAF50' : p.change < 0 ? '#F44336' : '#757575'}; font-weight: bold;">
-                        ${p.change > 0 ? '+' : ''}${p.change.toFixed(1)}%
-                    </div>
-                    <div class="price-range">
-                        <div class="range-item">
-                            <div class="range-label">7-Day Low</div>
-                            <div class="range-value" style="color: #F44336;">₹${p.low}</div>
-                        </div>
-                        <div class="range-item">
-                            <div class="range-label">Range</div>
-                            <div class="range-value" style="color: #558B2F;">₹${(p.high - p.low).toFixed(2)}</div>
-                        </div>
-                        <div class="range-item">
-                            <div class="range-label">7-Day High</div>
-                            <div class="range-value" style="color: #4CAF50;">₹${p.high}</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('price-list').innerHTML = html;
+                `).join('');
+                document.getElementById('price-list').innerHTML = html;
+            });
         }
 
         function renderRecipes() {
-            let filtered = mockRecipes.filter(r => currentRecipeFilter === 'All' || r.millet === currentRecipeFilter);
-            const html = filtered.map(r => `
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <div class="card-title">${r.name}</div>
-                            <div class="card-subtitle">${r.millet}</div>
+            db.ref('recipes').once('value', snapshot => {
+                let recipeData = [];
+                if (snapshot.exists()) {
+                    recipeData = Object.values(snapshot.val());
+                } else {
+                    recipeData = mockRecipes;
+                }
+                
+                let filtered = recipeData.filter(r => currentRecipeFilter === 'All' || r.millet === currentRecipeFilter);
+                const html = filtered.map(r => `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <div class="card-title">${r.name}</div>
+                                <div class="card-subtitle">${r.millet}</div>
+                            </div>
+                            <button class="heart-btn" onclick="toggleSave(${r.id})">
+                                ${savedRecipes.includes(r.id) ? '❤️' : '🤍'}
+                            </button>
                         </div>
-                        <button class="heart-btn" onclick="toggleSave(${r.id})">
-                            ${savedRecipes.includes(r.id) ? '❤️' : '🤍'}
-                        </button>
+                        <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">${r.desc}</p>
+                        <div class="recipe-meta">
+                            <span class="meta-item">⏱️ ${r.time} min</span>
+                            <span class="meta-item">👥 ${r.servings}</span>
+                            <span class="meta-item">📊 ${r.difficulty}</span>
+                        </div>
+                        <div class="ingredient-tags">
+                            ${r.ingredients.slice(0, 3).map(ing => `<span class="tag">${ing}</span>`).join('')}
+                            ${r.ingredients.length > 3 ? `<span class="tag">+${r.ingredients.length - 3}</span>` : ''}
+                        </div>
+                        <button class="button">View Recipe</button>
                     </div>
-                    <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">${r.desc}</p>
-                    <div class="recipe-meta">
-                        <span class="meta-item">⏱️ ${r.time} min</span>
-                        <span class="meta-item">👥 ${r.servings}</span>
-                        <span class="meta-item">📊 ${r.difficulty}</span>
-                    </div>
-                    <div class="ingredient-tags">
-                        ${r.ingredients.slice(0, 3).map(ing => `<span class="tag">${ing}</span>`).join('')}
-                        ${r.ingredients.length > 3 ? `<span class="tag">+${r.ingredients.length - 3}</span>` : ''}
-                    </div>
-                    <button class="button">View Recipe</button>
-                </div>
-            `).join('');
-            document.getElementById('recipe-list').innerHTML = html;
+                `).join('');
+                document.getElementById('recipe-list').innerHTML = html;
+            });
         }
 
         function renderHealth() {
-            const health = mockHealth.find(h => h.millet === currentHealth);
-            if (!health) return;
-            const html = `
-                <div class="card">
-                    <div class="card-title">${health.title}</div>
-                    <div class="card-subtitle">${health.millet}</div>
-                    <div style="font-size: 12px; color: #424242; margin-bottom: 12px; line-height: 1.5;">
-                        ${health.millet} is an excellent choice for health due to its unique nutritional profile and climate resilience.
+            db.ref('health').once('value', snapshot => {
+                let healthData = [];
+                if (snapshot.exists()) {
+                    healthData = Object.values(snapshot.val());
+                } else {
+                    healthData = mockHealth;
+                }
+                
+                const health = healthData.find(h => h.millet === currentHealth);
+                if (!health) return;
+                const html = `
+                    <div class="card">
+                        <div class="card-title">${health.title}</div>
+                        <div class="card-subtitle">${health.millet}</div>
+                        <div style="font-size: 12px; color: #424242; margin-bottom: 12px; line-height: 1.5;">
+                            ${health.millet} is an excellent choice for health due to its unique nutritional profile and climate resilience.
+                        </div>
+                        <strong style="color: #558B2F; font-size: 12px;">Key Benefits</strong>
+                        <ul class="benefits-list">
+                            ${health.benefits.map(b => `<li>${b}</li>`).join('')}
+                        </ul>
+                        <strong style="color: #558B2F; font-size: 12px; display: block; margin-top: 12px;">Scientific Facts</strong>
+                        ${health.facts.map(f => `<div class="scientific-fact">${f}</div>`).join('')}
+                        <div class="reading-time">📖 3-4 min read</div>
                     </div>
-                    <strong style="color: #558B2F; font-size: 12px;">Key Benefits</strong>
-                    <ul class="benefits-list">
-                        ${health.benefits.map(b => `<li>${b}</li>`).join('')}
-                    </ul>
-                    <strong style="color: #558B2F; font-size: 12px; display: block; margin-top: 12px;">Scientific Facts</strong>
-                    ${health.facts.map(f => `<div class="scientific-fact">${f}</div>`).join('')}
-                    <div class="reading-time">📖 3-4 min read</div>
-                </div>
-            `;
-            document.getElementById('health-list').innerHTML = html;
+                `;
+                document.getElementById('health-list').innerHTML = html;
+            });
         }
 
         function renderFPO() {
-            let filtered = currentDistrict === 'All' ? mockFPO : mockFPO.filter(f => f.location === currentDistrict);
-            const html = filtered.map(f => `
-                <div class="card">
-                    <div class="card-title">${f.name}</div>
-                    <div class="card-subtitle">${f.location}</div>
-                    <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">
-                        Established cooperative dedicated to quality millet production and sustainable farming.
-                    </p>
-                    <div>
-                        <strong style="font-size: 11px; color: #558B2F;">Specialties</strong>
-                        <div style="margin-top: 4px;">
-                            ${f.specialties.map(s => `<span class="fpo-badge">${s}</span>`).join('')}
+            db.ref('fpo').once('value', snapshot => {
+                let fpoData = [];
+                if (snapshot.exists()) {
+                    fpoData = Object.values(snapshot.val());
+                } else {
+                    fpoData = mockFPO;
+                }
+                
+                let filtered = currentDistrict === 'All' ? fpoData : fpoData.filter(f => f.location === currentDistrict);
+                const html = filtered.map(f => `
+                    <div class="card">
+                        <div class="card-title">${f.name}</div>
+                        <div class="card-subtitle">${f.location}</div>
+                        <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">
+                            Established cooperative dedicated to quality millet production and sustainable farming.
+                        </p>
+                        <div>
+                            <strong style="font-size: 11px; color: #558B2F;">Specialties</strong>
+                            <div style="margin-top: 4px;">
+                                ${f.specialties.map(s => `<span class="fpo-badge">${s}</span>`).join('')}
+                            </div>
                         </div>
+                        <div class="fpo-info">
+                            <strong>Certification:</strong> ${f.cert}<br>
+                            <strong>Contact:</strong> ${f.contact}
+                        </div>
+                        <button class="button" onclick="alert('Calling ' + '${f.contact}')">📞 Contact FPO</button>
                     </div>
-                    <div class="fpo-info">
-                        <strong>Certification:</strong> ${f.cert}<br>
-                        <strong>Contact:</strong> ${f.contact}
-                    </div>
-                    <button class="button" onclick="alert('Calling ' + '${f.contact}')">📞 Contact FPO</button>
-                </div>
-            `).join('');
-            document.getElementById('fpo-list').innerHTML = html;
+                `).join('');
+                document.getElementById('fpo-list').innerHTML = html;
+            });
         }
 
         function toggleSave(id) {
