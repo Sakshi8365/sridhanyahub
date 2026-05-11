@@ -1,0 +1,242 @@
+{
+  "prices": {
+    "price_1": {
+      "id": "price_1",
+      "milletType": "Navane",
+      "city": "Bengaluru",
+      "currentPrice": 45.5,
+      "lowPrice": 42.0,
+      "highPrice": 48.75,
+      "priceChange": 3.2,
+      "trend": "up",
+      "timestamp": 1715360400000
+    },
+    "price_2": {
+      "id": "price_2",
+      "milletType": "Sajje",
+      "city": "Davangere",
+      "currentPrice": 38.0,
+      "lowPrice": 35.5,
+      "highPrice": 40.0,
+      "priceChange": 2.5,
+      "trend": "up",
+      "timestamp": 1715360400000
+    },
+    "price_3": {
+      "id": "price_3",
+      "milletType": "Baragu",
+      "city": "Mysore",
+      "currentPrice": 52.0,
+      "lowPrice": 50.0,
+      "highPrice": 55.5,
+      "priceChange": -1.5,
+      "trend": "down",
+      "timestamp": 1715360400000
+    },
+    "price_4": {
+      "id": "price_4",
+      "milletType": "Jowar",
+      "city": "Hubballi",
+      "currentPrice": 41.25,
+      "lowPrice": 40.0,
+      "highPrice": 43.0,
+      "priceChange": 0.5,
+      "trend": "stable",
+      "timestamp": 1715360400000
+    },
+    "price_5": {
+      "id": "price_5",
+      "milletType": "Navane",
+      "city": "Mysore",
+      "currentPrice": 43.75,
+      "lowPrice": 41.0,
+      "highPrice": 47.0,
+      "priceChange": 2.8,
+      "trend": "up",
+      "timestamp": 1715360400000
+    }
+  },
+  "recipes": {
+    "recipe_1": {
+      "id": "recipe_1",
+      "name": "Navane Uppitu",
+      "milletType": "Navane",
+      "description": "Traditional breakfast dish made with roasted Navane flour. Soft, fluffy, and delicious!",
+      "ingredients": [
+        "1 cup Navane flour",
+        "3 tbsp Ghee",
+        "1 medium Onion",
+        "2-3 Green chili",
+        "Salt to taste",
+        "2 cups Water"
+      ],
+      "instructions": [
+        "Roast the Navane flour in a dry pan for 2-3 minutes",
+        "Heat ghee in another pan, sauté finely chopped onions and green chilies",
+        "Add the roasted flour and mix well",
+        "Gradually add water while stirring to avoid lumps",
+        "Cook on medium heat for 8-10 minutes until done",
+        "Serve hot with a pat of ghee on top"
+      ],
+      "cookingTimeMinutes": 20,
+      "servings": 4,
+      "difficulty": "easy",
+      "nutritionInfo": "High in fiber, minerals, and antioxidants. 100g provides 350 kcal",
+      "healthBenefits": "Aids digestion, lowers cholesterol, rich in antioxidants",
+      "tips": "Use pure ghee for authentic taste. Don't overcook to maintain texture"
+    },
+    "recipe_2": {
+      "id": "recipe_2",
+      "name": "Sajje Ambali",
+      "milletType": "Sajje",
+      "description": "Cooling fermented drink perfect for hot summer days. Probiotic-rich and refreshing!",
+      "ingredients": [
+        "1 cup Sajje flour",
+        "1 cup Yogurt",
+        "1 tsp Cumin seeds",
+        "4 cups Water",
+        "Salt to taste",
+        "Ice cubes"
+      ],
+      "instructions": [
+        "Make a smooth paste of Sajje flour with 1 cup water",
+        "Let it ferment for 6-8 hours in warm place",
+        "Add yogurt to the fermented mixture",
+        "Add remaining 3 cups of water and cumin seeds",
+        "Blend well using blender",
+        "Add salt and ice, serve chilled"
+      ],
+      "cookingTimeMinutes": 15,
+      "servings": 2,
+      "difficulty": "medium",
+      "nutritionInfo": "Probiotic rich, aids gut health. 200ml provides 45 kcal",
+      "healthBenefits": "Improves digestion, cooling effect, good for lactose intolerant people",
+      "tips": "Ferment in warm place for best results. Consume fresh for maximum probiotics"
+    },
+    "recipe_3": {
+      "id": "recipe_3",
+      "name": "Baragu Roti",
+      "milletType": "Baragu",
+      "description": "Nutritious flatbread made with finger millet. Rich in calcium and perfect with any curry!",
+      "ingredients": [
+        "2 cups Baragu flour",
+        "Salt to taste",
+        "1 tbsp Oil",
+        "Warm water (as needed)",
+        "Extra oil for cooking"
+      ],
+      "instructions": [
+        "Mix Baragu flour with salt and oil",
+        "Add warm water gradually to form soft dough",
+        "Knead for 5 minutes until smooth",
+        "Divide into 6-8 balls and let rest for 10 minutes",
+        "Roll each ball into thin roti",
+        "Cook on hot griddle/tawa until brown spots appear",
+        "Serve with curry or ghee"
+      ],
+      "cookingTimeMinutes": 25,
+      "servings": 4,
+      "difficulty": "easy",
+      "nutritionInfo": "Highest calcium content among millets. One roti provides 50mg calcium",
+      "healthBenefits": "Strengthens bones, aids muscle development, good for children",
+      "tips": "Keep dough covered while making rotis. Don't make too thick"
+    }
+  },
+  "healthBenefits": {
+    "health_1": {
+      "id": "health_1",
+      "milletType": "Navane",
+      "title": "Why Navane is Good for Diabetics",
+      "description": "Navane (Foxtail millet) is an excellent choice for people with diabetes due to its low glycemic index and high fiber content. It helps in maintaining stable blood sugar levels.",
+      "benefits": [
+        "Low Glycemic Index (GI) prevents blood sugar spikes",
+        "High fiber content aids in glucose regulation",
+        "Rich in antioxidants that protect beta cells",
+        "Contains essential minerals like manganese for metabolism",
+        "Improves insulin sensitivity"
+      ],
+      "scientificFacts": [
+        "Navane has GI of only 54 (compared to white rice's 73)",
+        "100g of Navane provides 6.7g of fiber - crucial for diabetic management",
+        "Contains phenolic compounds that improve insulin sensitivity",
+        "Research shows 50% reduction in blood sugar spike with Navane vs rice"
+      ],
+      "readingTimeMinutes": 3
+    },
+    "health_2": {
+      "id": "health_2",
+      "milletType": "Baragu",
+      "title": "Baragu - A Superfood for Strong Bones",
+      "description": "Baragu (Finger millet) is the richest plant source of calcium among cereals. It's particularly beneficial for children, women, and elderly people.",
+      "benefits": [
+        "Highest calcium content among millets (344mg per 100g)",
+        "Prevents osteoporosis and bone weakening",
+        "Rich in phosphorus for bone metabolism",
+        "Beneficial for children's growth and development",
+        "Contains magnesium for bone mineral density"
+      ],
+      "scientificFacts": [
+        "Contains 10x more calcium than rice or wheat",
+        "Bioavailable calcium is better absorbed compared to fortified milk",
+        "Provides all essential amino acids for bone protein formation",
+        "Studies show improved bone density in women consuming Baragu regularly"
+      ],
+      "readingTimeMinutes": 4
+    },
+    "health_3": {
+      "id": "health_3",
+      "milletType": "Sajje",
+      "title": "Sajje - Climate Champion & Nutrition Hero",
+      "description": "Sajje (Pearl millet) is not only nutritious but also climate-resilient. It requires 70% less water than paddy, making it perfect for sustainable agriculture.",
+      "benefits": [
+        "Climate resilient - thrives in drought conditions",
+        "Complete protein source for vegetarians (11g per 100g)",
+        "High in magnesium for heart health",
+        "Supports immune system with selenium",
+        "Low carbohydrate option for weight management"
+      ],
+      "scientificFacts": [
+        "Requires only 300-400mm rainfall vs paddy's 1200-1500mm",
+        "100g Sajje provides 11g of complete plant protein",
+        "Rich in magnesium (important for 300+ enzyme reactions in body)",
+        "Contains tryptophan precursor for serotonin production"
+      ],
+      "readingTimeMinutes": 3
+    }
+  },
+  "organizations": {
+    "fpo_1": {
+      "id": "fpo_1",
+      "name": "Davangere Millet Farmers Cooperative",
+      "location": "Davangere",
+      "district": "Davangere",
+      "contact": "9876543210",
+      "milletSpecialties": ["Navane", "Sajje", "Jowar"],
+      "description": "Established cooperative of 500+ millet farmers dedicated to quality production and fair trade practices.",
+      "website": "www.davangere-millets.co.in",
+      "certification": "Organic"
+    },
+    "fpo_2": {
+      "id": "fpo_2",
+      "name": "Bengaluru Urban Farming Network",
+      "location": "Bengaluru",
+      "district": "Bengaluru",
+      "contact": "9876543211",
+      "milletSpecialties": ["Navane", "Baragu"],
+      "description": "Urban FPO promoting sustainable millet farming in and around Bengaluru with agro-ecological practices.",
+      "website": "www.bengaluru-millets.in",
+      "certification": "Fair Trade"
+    },
+    "fpo_3": {
+      "id": "fpo_3",
+      "name": "Mysore Millet Heritage",
+      "location": "Mysore",
+      "district": "Mysore",
+      "contact": "9876543212",
+      "milletSpecialties": ["Baragu", "Sajje"],
+      "description": "Traditional farmers preserving ancient millet varieties with heritage cultivation methods and biodiversity conservation.",
+      "website": "www.mysore-millets.org",
+      "certification": "Heritage Certified"
+    }
+  }
+}

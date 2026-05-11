@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Siri-Dhanya Hub</string>
+
+    <!-- Tab Names -->
+    <string name="tab_mandi_watch">Mandi Watch</string>
+    <string name="tab_recipe_lab">Recipe Lab</string>
+    <string name="tab_health_benefits">Health Benefits</string>
+    <string name="tab_direct_buy">Direct Buy</string>
+
+    <!-- Mandi Watch Strings -->
+    <string name="mandi_title">Live Mandi Prices</string>
+    <string name="mandi_select_city">Select City</string>
+    <string name="mandi_price_per_kg">₹ per kg</string>
+    <string name="mandi_7day_high">7-Day High</string>
+    <string name="mandi_7day_low">7-Day Low</string>
+    <string name="mandi_price_change">Price Change</string>
+
+    <!-- Recipe Lab Strings -->
+    <string name="recipe_search_placeholder">Search recipes...</string>
+    <string name="recipe_search_by_millet">Search by millet type</string>
+    <string name="recipe_cooking_time">Cooking Time</string>
+    <string name="recipe_servings">Servings</string>
+    <string name="recipe_difficulty">Difficulty</string>
+    <string name="recipe_ingredients">Ingredients</string>
+    <string name="recipe_instructions">Instructions</string>
+    <string name="recipe_nutrition_info">Nutrition Info</string>
+    <string name="recipe_health_benefits">Health Benefits</string>
+    <string name="recipe_tips">Chef Tips</string>
+    <string name="recipe_save">Save Recipe</string>
+    <string name="recipe_saved">Recipe Saved</string>
+    <string name="recipe_unsave">Remove from Saved</string>
+    <string name="recipe_view_saved">View Saved Recipes</string>
+
+    <!-- Health Benefits Strings -->
+    <string name="health_benefits">Why Millets Are Superfoods</string>
+    <string name="health_diabetes">Good for Diabetics</string>
+    <string name="health_nutrition_security">Nutrition Security</string>
+    <string name="health_climate_action">Climate Action</string>
+    <string name="health_benefits_list">Benefits</string>
+    <string name="health_scientific_facts">Scientific Facts</string>
+    <string name="health_reading_time">min read</string>
+
+    <!-- Direct Buy Strings -->
+    <string name="direct_buy_title">Direct from Farmers</string>
+    <string name="direct_buy_connect_fpo">Connect with FPO</string>
+    <string name="direct_buy_location">Location</string>
+    <string name="direct_buy_available">Available Quantity</string>
+    <string name="direct_buy_contact">Contact FPO</string>
+    <string name="direct_buy_certification">Certification</string>
+    <string name="direct_buy_min_order">Min Order</string>
+    <string name="direct_buy_harvest_date">Harvest Date</string>
+
+    <!-- Common Strings -->
+    <string name="loading">Loading...</string>
+    <string name="error">Error loading data</string>
+    <string name="retry">Retry</string>
+    <string name="all">All</string>
+</resources>

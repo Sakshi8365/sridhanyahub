@@ -1,0 +1,60 @@
+# Gradle
+.gradle/
+build/
+*.apk
+*.aar
+*.jar
+*.jks
+*.keystore
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+*.dex
+*.class
+*.log
+
+# Firebase
+google-services.json
+
+# Keys & Secrets
+*.keystore
+secrets.properties
+api_keys.properties
+
+# IDE specific files
+.vscode/
+.project
+.classpath
+.c9/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+.coverage
+
+# Documentation builds
+docs/_build/

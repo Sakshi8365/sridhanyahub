@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors - Earthy & Natural Palette -->
+    <color name="primary_green">#558B2F</color>
+    <color name="primary_green_dark">#33691E</color>
+    <color name="primary_brown">#8D6E63</color>
+    <color name="primary_gold">#B8860B</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary_light_green">#AED581</color>
+    <color name="secondary_tan">#D7CCC8</color>
+    <color name="secondary_cream">#EFEBE9</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_red">#D32F2F</color>
+    <color name="accent_green">#43A047</color>
+    <color name="accent_orange">#F57C00</color>
+
+    <!-- Neutral Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_dark">#424242</color>
+    <color name="gray_medium">#757575</color>
+    <color name="gray_light">#E0E0E0</color>
+    <color name="gray_lighter">#F5F5F5</color>
+
+    <!-- Background Colors -->
+    <color name="background_light">#FAFAF8</color>
+    <color name="background_paper">#FFFBF9</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#424242</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#BDBDBD</color>
+
+    <!-- Status Colors -->
+    <color name="trend_up">#4CAF50</color>
+    <color name="trend_down">#F44336</color>
+    <color name="trend_stable">#FF9800</color>
+</resources>
