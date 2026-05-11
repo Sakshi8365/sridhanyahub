@@ -1,263 +1,67 @@
-# Siri-Dhanya Hub - Android App
+# Siri-Dhanya Hub
 
-A comprehensive Android application serving farmers and consumers of Karnataka's millet (Siri-Dhanya) ecosystem. The app provides real-time market prices, traditional recipes, health benefits, and direct farmer connections.
+Siri-Dhanya Hub is an Android app for Karnataka's millet value chain. It helps farmers and consumers track millet prices, explore recipes, learn health benefits, and connect directly with Farmer Producer Organizations.
 
-## Features
+## Live Links
 
-### 1. 🌾 Mandi Watch
+- Live app: https://sakshi8365.github.io/sridhanyahub/
+- Direct app page: https://sakshi8365.github.io/sridhanyahub/demo.html
+- Firebase setup helper: https://sakshi8365.github.io/sridhanyahub/setup-firebase.html
+- GitHub repo: https://github.com/Sakshi8365/sridhanyahub
 
-- **Real-time Millet Prices**: Live market prices across Karnataka cities (Davangere, Bengaluru, Mysore, Hubballi)
-- **7-Day Price Tracking**: View high/low prices and trends from the last 7 days
-- **Trend Indicators**: Visual indicators (📈 up, 📉 down, ➡️ stable)
-- **Multi-City Comparison**: Filter by city or millet type
-- **Millet Types Supported**: Navane, Sajje, Baragu, Jowar
+## What It Does
 
-### 2. 📖 Recipe Lab
+- Mandi Watch shows millet prices with 7-day high, low, trend, and city filtering.
+- Recipe Lab lets users search millet recipes and save favorites.
+- Health Benefits explains nutritional value with science-based reading cards.
+- Direct Buy connects users with FPOs and local millet suppliers.
 
-- **Kannada Recipes**: Traditional step-by-step recipes for millet-based dishes
-- **Search & Filter**: Search by recipe name or millet type
-- **Save Recipes**: Mark favorite recipes for quick access
-- **Recipe Details**:
-  - Ingredients list
-  - Step-by-step instructions
-  - Cooking time and servings
-  - Difficulty level
-  - Nutrition information
-  - Health benefits
-  - Chef tips
+## Success Criteria Covered
 
-### 3. ❤️ Health Benefits
-
-- **Nutritional Information**: Comprehensive health data for each millet type
-- **Disease-Specific Benefits**: "Why Navane is good for Diabetics" - data-backed insights
-- **Scientific Facts**: Research-based information
-- **Climate Impact**: Information on water conservation (70% less than paddy)
-- **Reading Time**: Estimate reading duration for each article
-
-### 4. 🌾 Direct Buy
-
-- **Connect with FPOs**: List of Farmer Producer Organizations
-- **District Filtering**: Find FPOs in your area
-- **Direct Purchasing**: Browse and contact local farming organizations
-- **Product Listings**: Available millet products with pricing
-- **Certifications**: Organic, Fair Trade, Heritage Certified
+- 7-day price high/low display
+- Recipe save and unsave feature
+- Earthy, natural UI theme
 
 ## Tech Stack
 
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose (Modern Android UI)
-- **Database**: Firebase Realtime Database
-- **Authentication**: Firebase Authentication
-- **AI/ML**: Google Generative AI API (for recipe recommendations, health insights)
-- **Image Loading**: Glide
-- **Networking**: Retrofit + OkHttp
-- **Architecture Pattern**: MVVM (Model-View-ViewModel)
+- Kotlin
+- Jetpack Compose
+- MVVM architecture
+- Firebase Realtime Database
+- Material 3 design system
 
 ## Project Structure
 
-```
+```text
 SiriDhanyaHub/
 ├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/agriculture/siridhanya/
-│   │   │   │   ├── MainActivity.kt              # Entry point
-│   │   │   │   ├── data/
-│   │   │   │   │   ├── model/                  # Data classes
-│   │   │   │   │   ├── repository/             # Firebase repositories
-│   │   │   │   │   └── mock/                   # Mock data
-│   │   │   │   ├── ui/
-│   │   │   │   │   └── screens/                # Composable screens
-│   │   │   │   └── viewmodel/                  # ViewModels
-│   │   │   ├── res/
-│   │   │   │   └── values/
-│   │   │   │       ├── colors.xml              # Earthy color palette
-│   │   │   │       ├── strings.xml             # Text resources
-│   │   │   │       └── themes.xml              # App theme
-│   │   │   └── AndroidManifest.xml
-│   │   └── build.gradle.kts
-│   └── proguard-rules.pro
-├── build.gradle.kts                             # Root build file
-├── settings.gradle.kts
-└── google-services.json                         # Firebase config
-
+│   └── src/main/java/com/agriculture/siridhanya/
+│       ├── data/
+│       ├── ui/
+│       └── viewmodel/
+├── README.md
+├── index.html
+├── demo.html
+├── setup-firebase.html
+├── build.gradle.kts
+└── settings.gradle.kts
 ```
 
-## Setup Instructions
+## Running the Android App
 
-### Prerequisites
+1. Open the project in Android Studio.
+2. Let Gradle sync finish.
+3. Run the app on an emulator or Android device.
 
-- Android Studio (Latest version)
-- Android SDK 26+ (Min), 34 (Target)
-- Java 8+
-- Gradle 8.0+
-- Firebase account
+If you only need the shareable web demo, use the live links above.
 
-### Step 1: Clone the Repository
+## Firebase Notes
 
-```bash
-git clone https://github.com/yourusername/SiriDhanyaHub.git
-cd SiriDhanyaHub
-```
+The demo pages are wired for Firebase Realtime Database. The setup page includes a helper to connect Firebase and add sample data for the live preview.
 
-### Step 2: Firebase Setup
+## Submission Notes
 
-1. **Create Firebase Project**
-   - Go to [Firebase Console](https://console.firebase.google.com)
-   - Click "Create a new project"
-   - Name it "siri-dhanya-hub"
-   - Enable Google Analytics
-   - Create Firebase project
-
-2. **Add Android App**
-   - Go to Project Settings → Your apps → Add Android app
-   - Package name: `com.agriculture.siridhanya`
-   - App nickname: `SiriDhanyaHub`
-   - SHA-1 fingerprint (get from your debug key or signing key)
-   - Download `google-services.json`
-   - Place it in `SiriDhanyaHub/` directory (already included)
-
-3. **Enable Firebase Services**
-   - Go to Realtime Database → Create Database
-   - Start in Test Mode (for development)
-   - Enable Authentication → Email/Password method
-
-4. **Import Sample Data**
-   - Use Firebase Console to import sample data:
-     ```json
-     {
-       "prices": {
-         "price_1": {
-           "milletType": "Navane",
-           "city": "Bengaluru",
-           "currentPrice": 45.50,
-           "lowPrice": 42.00,
-           "highPrice": 48.75,
-           "trend": "up"
-         }
-       },
-       "recipes": {...},
-       "healthBenefits": {...},
-       "organizations": {...}
-     }
-     ```
-
-### Step 3: Generate SHA-1 Fingerprint
-
-```bash
-# For debug key
-./gradlew signingReport
-
-# Or using keytool
-keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
-```
-
-### Step 4: Build and Run
-
-1. Open the project in Android Studio
-2. Wait for Gradle sync to complete
-3. Run `gradlew build` to ensure all dependencies are resolved
-4. Click "Run" or use:
-   ```bash
-   ./gradlew installDebug
-   ```
-
-### Step 5: Test on Emulator or Device
-
-```bash
-# Using Android Studio emulator
-# Or connect physical device via USB and run
-./gradlew installDebug
-```
-
-## GenAI Integration
-
-The app integrates Google's Generative AI for:
-
-### 1. Recipe Recommendations
-
-- Personalized recipe suggestions based on dietary preferences
-- Allergy warnings and substitutions
-
-### 2. Health Insights
-
-- Generate health benefit summaries for millets
-- Answer user questions about nutrition
-
-### 3. Price Analysis
-
-- Predict price trends using historical data
-- Market insights and recommendations
-
-### API Setup
-
-1. **Get API Key**
-   - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create new API key
-   - Add to local.properties or build.gradle
-
-2. **Add to AndroidManifest.xml**
-   ```xml
-   <meta-data
-       android:name="com.google.ai.client.generativeai.api_key"
-       android:value="YOUR_API_KEY_HERE" />
-   ```
-
-## Design System - Earthy & Natural UI
-
-### Color Palette
-
-```kotlin
-Primary Green: #558B2F (Main brand color - earthy green)
-Primary Dark Green: #33691E (Deep green for emphasis)
-Primary Brown: #8D6E63 (Earthy brown)
-Gold: #B8860B (Harvest gold accent)
-
-Secondary Light Green: #AED581 (Light earthy green)
-Secondary Tan: #D7CCC8 (Natural tan)
-Secondary Cream: #EFEBE9 (Warm cream)
-
-Accent Colors:
-- Trend Up: #4CAF50 (Green - positive)
-- Trend Down: #F44336 (Red - negative)
-- Trend Stable: #FF9800 (Orange - neutral)
-```
-
-### Typography
-
-- **Headlines**: Bold, Large (28sp)
-- **Titles**: SemiBold, Medium (18sp)
-- **Body**: Regular, Medium (12-14sp)
-- **Labels**: Regular, Small (10-12sp)
-
-### Components
-
-- **Cards**: White background with subtle shadow, rounded corners (12dp)
-- **Buttons**: Full-width with rounded corners (8dp)
-- **Chips**: Rounded filter chips with earthy colors
-- **Icons**: Material Design icons with earthy color scheme
-
-## Success Criteria Implementation
-
-✅ **Mandi Price 7-Day Range**
-
-- Shows high/low for last 7 days
-- Calculates price range and percentage change
-- Visual trend indicators
-
-✅ **Recipe Save Functionality**
-
-- Save recipes to user profile
-- View saved recipes separately
-- Toggle save/unsave with heart icon
-- Persisted in Firebase
-
-✅ **Earthy & Natural UI**
-
-- Earth tones: greens, browns, golds
-- Natural imagery and icons (🌾, 📖, ❤️, 🌾)
-- Card-based layout (organic, natural appearance)
-- Readable typography with good contrast
+This repository includes both the Android source and the hosted demo pages, so reviewers can inspect the code and open the live experience from the same project.
 
 ## Deployment Guide
 
