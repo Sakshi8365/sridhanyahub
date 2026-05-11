@@ -3,6 +3,7 @@ package com.agriculture.siridhanya.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -174,7 +175,7 @@ fun RecipeCard(
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Start
+                verticalAlignment = Alignment.Top
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
@@ -247,15 +248,17 @@ fun RecipeCard(
                     )
                 }
                 if (recipe.ingredients.size > 3) {
-                    Text(
-                        "+${recipe.ingredients.size - 3}",
-                        fontSize = 10.sp,
-                        color = Color(0xFF558B2F),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .background(Color(0xFFE8F5E9), RoundedCornerShape(4.dp))
-                            .padding(4.dp)
-                    )
+                    item {
+                        Text(
+                            "+${recipe.ingredients.size - 3}",
+                            fontSize = 10.sp,
+                            color = Color(0xFF558B2F),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .background(Color(0xFFE8F5E9), RoundedCornerShape(4.dp))
+                                .padding(4.dp)
+                        )
+                    }
                 }
             }
 

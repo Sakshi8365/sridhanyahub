@@ -70,9 +70,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     
-    // Google Generative AI (GenAI)
-    implementation("com.google.ai.client.generativeai:google-generative-ai-android:0.3.0")
-    
     // Image Loading (Glide)
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
