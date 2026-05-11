@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri-Dhanya Hub - Live Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #558B2F 0%, #33691E 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: #FAFAF8;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-height: 900px;
+        }
+
+        .screen {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #558B2F;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #757575;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #D7CCC8;
+            color: #424242;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .chip.active {
+            background: #558B2F;
+            color: white;
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #558B2F;
+            margin-bottom: 4px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #757575;
+            margin-bottom: 12px;
+        }
+
+        .price-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #33691E;
+            margin-bottom: 12px;
+        }
+
+        .trend-badge {
+            display: inline-block;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-left: 8px;
+        }
+
+        .trend-up {
+            background: #E8F5E9;
+            color: #4CAF50;
+        }
+
+        .trend-down {
+            background: #FFEBEE;
+            color: #F44336;
+        }
+
+        .trend-stable {
+            background: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .price-range {
+            background: #FAFAF8;
+            border-radius: 8px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .range-item {
+            text-align: center;
+        }
+
+        .range-label {
+            color: #757575;
+            font-size: 10px;
+            margin-bottom: 4px;
+        }
+
+        .range-value {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .ingredient-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: #E8F5E9;
+            color: #558B2F;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            padding: 8px 0;
+            border-top: 1px solid #E0E0E0;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .meta-item {
+            font-size: 10px;
+            color: #757575;
+        }
+
+        .heart-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .benefits-list li {
+            font-size: 12px;
+            color: #424242;
+            margin-bottom: 6px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .fpo-info {
+            background: #FAFAF8;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 12px;
+        }
+
+        .fpo-badge {
+            display: inline-block;
+            background: #E8F5E9;
+            color: #558B2F;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin: 4px 4px 4px 0;
+            font-size: 10px;
+        }
+
+        .bottom-nav {
+            display: flex;
+            border-top: 1px solid #E0E0E0;
+            background: white;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #9E9E9E;
+            transition: color 0.3s ease;
+            font-size: 12px;
+        }
+
+        .nav-item.active {
+            color: #558B2F;
+            border-top: 3px solid #558B2F;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #D7CCC8;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            background: white;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            background: #558B2F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #33691E;
+        }
+
+        .scientific-fact {
+            background: #F1F8E9;
+            border-left: 4px solid #558B2F;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #33691E;
+            line-height: 1.5;
+        }
+
+        .reading-time {
+            font-size: 10px;
+            color: #9CCC65;
+            margin-top: 12px;
+        }
+
+        .demo-banner {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Mandi Watch Screen -->
+        <div class="screen active" id="screen-mandi">
+            <div class="demo-banner">📱 Interactive Demo - Mock Data</div>
+            
+            <div class="header">
+                <h1>🌾 Mandi Watch</h1>
+                <p>Live Millet Prices across Karnataka</p>
+            </div>
+
+            <div class="filter-chips" id="city-filter">
+                <button class="chip active" onclick="filterCity('Bengaluru')">Bengaluru</button>
+                <button class="chip" onclick="filterCity('Davangere')">Davangere</button>
+                <button class="chip" onclick="filterCity('Mysore')">Mysore</button>
+                <button class="chip" onclick="filterCity('Hubballi')">Hubballi</button>
+            </div>
+
+            <div class="filter-chips" id="millet-filter">
+                <button class="chip" onclick="filterMillet('Navane')">Navane</button>
+                <button class="chip" onclick="filterMillet('Sajje')">Sajje</button>
+                <button class="chip" onclick="filterMillet('Baragu')">Baragu</button>
+                <button class="chip" onclick="filterMillet('Jowar')">Jowar</button>
+            </div>
+
+            <div id="price-list"></div>
+        </div>
+
+        <!-- Recipe Lab Screen -->
+        <div class="screen" id="screen-recipe">
+            <div class="demo-banner">📱 Interactive Demo - Mock Data</div>
+            
+            <div class="header">
+                <h1>📖 Recipe Lab</h1>
+                <p>Traditional Kannada Millet Recipes</p>
+            </div>
+
+            <input type="text" class="search-bar" placeholder="Search recipes..." onkeyup="searchRecipes(this.value)">
+
+            <div class="filter-chips" id="recipe-filter">
+                <button class="chip active" onclick="filterRecipe('All')">All</button>
+                <button class="chip" onclick="filterRecipe('Navane')">Navane</button>
+                <button class="chip" onclick="filterRecipe('Sajje')">Sajje</button>
+                <button class="chip" onclick="filterRecipe('Baragu')">Baragu</button>
+            </div>
+
+            <div id="recipe-list"></div>
+        </div>
+
+        <!-- Health Benefits Screen -->
+        <div class="screen" id="screen-health">
+            <div class="demo-banner">📱 Interactive Demo - Mock Data</div>
+            
+            <div class="header">
+                <h1>❤️ Health Benefits</h1>
+                <p>Why Millets Are Superfoods</p>
+            </div>
+
+            <div class="filter-chips" id="health-filter">
+                <button class="chip active" onclick="filterHealth('Navane')">Navane</button>
+                <button class="chip" onclick="filterHealth('Baragu')">Baragu</button>
+                <button class="chip" onclick="filterHealth('Sajje')">Sajje</button>
+            </div>
+
+            <div id="health-list"></div>
+        </div>
+
+        <!-- Direct Buy Screen -->
+        <div class="screen" id="screen-directbuy">
+            <div class="demo-banner">📱 Interactive Demo - Mock Data</div>
+            
+            <div class="header">
+                <h1>🌾 Direct Buy</h1>
+                <p>Connect with Farmer Organizations</p>
+            </div>
+
+            <div class="filter-chips" id="district-filter">
+                <button class="chip active" onclick="filterDistrict('All')">All</button>
+                <button class="chip" onclick="filterDistrict('Davangere')">Davangere</button>
+                <button class="chip" onclick="filterDistrict('Bengaluru')">Bengaluru</button>
+                <button class="chip" onclick="filterDistrict('Mysore')">Mysore</button>
+            </div>
+
+            <div id="fpo-list"></div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-item active" onclick="switchScreen('mandi')">
+                <div class="nav-icon">🌾</div>
+                <div>Mandi</div>
+            </button>
+            <button class="nav-item" onclick="switchScreen('recipe')">
+                <div class="nav-icon">📖</div>
+                <div>Recipes</div>
+            </button>
+            <button class="nav-item" onclick="switchScreen('health')">
+                <div class="nav-icon">❤️</div>
+                <div>Health</div>
+            </button>
+            <button class="nav-item" onclick="switchScreen('directbuy')">
+                <div class="nav-icon">🛒</div>
+                <div>Buy</div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Mock Data
+        const mockPrices = [
+            { id: 1, millet: 'Navane', city: 'Bengaluru', price: 45.50, low: 42.00, high: 48.75, change: 3.2, trend: 'up' },
+            { id: 2, millet: 'Sajje', city: 'Davangere', price: 38.00, low: 35.50, high: 40.00, change: 2.5, trend: 'up' },
+            { id: 3, millet: 'Baragu', city: 'Mysore', price: 52.00, low: 50.00, high: 55.50, change: -1.5, trend: 'down' },
+            { id: 4, millet: 'Jowar', city: 'Hubballi', price: 41.25, low: 40.00, high: 43.00, change: 0.5, trend: 'stable' },
+            { id: 5, millet: 'Navane', city: 'Mysore', price: 43.75, low: 41.00, high: 47.00, change: 2.8, trend: 'up' }
+        ];
+
+        const mockRecipes = [
+            {
+                id: 1, name: 'Navane Uppitu', millet: 'Navane',
+                desc: 'Traditional breakfast dish with roasted Navane flour',
+                ingredients: ['Navane flour', 'Ghee', 'Onions', 'Green chili', 'Salt'],
+                time: 20, servings: 4, difficulty: 'easy'
+            },
+            {
+                id: 2, name: 'Sajje Ambali', millet: 'Sajje',
+                desc: 'Cooling fermented drink perfect for summer',
+                ingredients: ['Sajje flour', 'Yogurt', 'Cumin seeds', 'Water', 'Salt'],
+                time: 15, servings: 2, difficulty: 'medium'
+            },
+            {
+                id: 3, name: 'Baragu Roti', millet: 'Baragu',
+                desc: 'Nutritious flatbread with finger millet',
+                ingredients: ['Baragu flour', 'Salt', 'Water', 'Oil'],
+                time: 25, servings: 4, difficulty: 'easy'
+            }
+        ];
+
+        const mockHealth = [
+            {
+                millet: 'Navane',
+                title: 'Why Navane is Good for Diabetics',
+                benefits: ['Low Glycemic Index (GI) prevents blood sugar spikes', 'High fiber content aids glucose regulation', 'Rich in antioxidants', 'Contains manganese for metabolism'],
+                facts: ['Navane has GI of only 54 (vs rice 73)', '100g provides 6.7g fiber - crucial for diabetic management']
+            },
+            {
+                millet: 'Baragu',
+                title: 'Baragu - Superfood for Strong Bones',
+                benefits: ['Highest calcium among millets (344mg per 100g)', 'Prevents osteoporosis', 'Rich in phosphorus', 'Beneficial for children\'s growth'],
+                facts: ['Contains 10x more calcium than rice', 'Better absorbed than fortified milk']
+            },
+            {
+                millet: 'Sajje',
+                title: 'Sajje - Climate Champion & Nutrition Hero',
+                benefits: ['Climate resilient - thrives in drought', 'Complete protein source (11g per 100g)', 'High in magnesium for heart health', 'Supports immune system'],
+                facts: ['Requires 70% less water than paddy', '100g provides complete plant protein']
+            }
+        ];
+
+        const mockFPO = [
+            {
+                name: 'Davangere Millet Farmers Cooperative',
+                location: 'Davangere',
+                contact: '9876543210',
+                specialties: ['Navane', 'Sajje', 'Jowar'],
+                cert: 'Organic'
+            },
+            {
+                name: 'Bengaluru Urban Farming Network',
+                location: 'Bengaluru',
+                contact: '9876543211',
+                specialties: ['Navane', 'Baragu'],
+                cert: 'Fair Trade'
+            },
+            {
+                name: 'Mysore Millet Heritage',
+                location: 'Mysore',
+                contact: '9876543212',
+                specialties: ['Baragu', 'Sajje'],
+                cert: 'Heritage'
+            }
+        ];
+
+        let currentCity = 'Bengaluru';
+        let currentMillet = null;
+        let currentRecipeFilter = 'All';
+        let currentHealth = 'Navane';
+        let currentDistrict = 'All';
+        let savedRecipes = [];
+
+        function switchScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('screen-' + screen).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+            
+            if (screen === 'mandi') renderPrices();
+            if (screen === 'recipe') renderRecipes();
+            if (screen === 'health') renderHealth();
+            if (screen === 'directbuy') renderFPO();
+        }
+
+        function filterCity(city) {
+            currentCity = city;
+            document.querySelectorAll('#city-filter .chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            renderPrices();
+        }
+
+        function filterMillet(millet) {
+            currentMillet = currentMillet === millet ? null : millet;
+            document.querySelectorAll('#millet-filter .chip').forEach(c => c.classList.remove('active'));
+            if (currentMillet) event.target.classList.add('active');
+            renderPrices();
+        }
+
+        function filterRecipe(filter) {
+            currentRecipeFilter = filter;
+            document.querySelectorAll('#recipe-filter .chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            renderRecipes();
+        }
+
+        function filterHealth(millet) {
+            currentHealth = millet;
+            document.querySelectorAll('#health-filter .chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            renderHealth();
+        }
+
+        function filterDistrict(district) {
+            currentDistrict = district;
+            document.querySelectorAll('#district-filter .chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            renderFPO();
+        }
+
+        function renderPrices() {
+            let filtered = mockPrices.filter(p => p.city === currentCity && (!currentMillet || p.millet === currentMillet));
+            const html = filtered.map(p => `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="card-title">${p.millet}</div>
+                            <div class="card-subtitle">${p.city}</div>
+                        </div>
+                        <div class="trend-badge trend-${p.trend}">${p.trend === 'up' ? '📈' : p.trend === 'down' ? '📉' : '➡️'}</div>
+                    </div>
+                    <div class="price-display">₹${p.price.toFixed(2)}/kg</div>
+                    <div style="color: ${p.change > 0 ? '#4CAF50' : p.change < 0 ? '#F44336' : '#757575'}; font-weight: bold;">
+                        ${p.change > 0 ? '+' : ''}${p.change.toFixed(1)}%
+                    </div>
+                    <div class="price-range">
+                        <div class="range-item">
+                            <div class="range-label">7-Day Low</div>
+                            <div class="range-value" style="color: #F44336;">₹${p.low}</div>
+                        </div>
+                        <div class="range-item">
+                            <div class="range-label">Range</div>
+                            <div class="range-value" style="color: #558B2F;">₹${(p.high - p.low).toFixed(2)}</div>
+                        </div>
+                        <div class="range-item">
+                            <div class="range-label">7-Day High</div>
+                            <div class="range-value" style="color: #4CAF50;">₹${p.high}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('price-list').innerHTML = html;
+        }
+
+        function renderRecipes() {
+            let filtered = mockRecipes.filter(r => currentRecipeFilter === 'All' || r.millet === currentRecipeFilter);
+            const html = filtered.map(r => `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div class="card-title">${r.name}</div>
+                            <div class="card-subtitle">${r.millet}</div>
+                        </div>
+                        <button class="heart-btn" onclick="toggleSave(${r.id})">
+                            ${savedRecipes.includes(r.id) ? '❤️' : '🤍'}
+                        </button>
+                    </div>
+                    <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">${r.desc}</p>
+                    <div class="recipe-meta">
+                        <span class="meta-item">⏱️ ${r.time} min</span>
+                        <span class="meta-item">👥 ${r.servings}</span>
+                        <span class="meta-item">📊 ${r.difficulty}</span>
+                    </div>
+                    <div class="ingredient-tags">
+                        ${r.ingredients.slice(0, 3).map(ing => `<span class="tag">${ing}</span>`).join('')}
+                        ${r.ingredients.length > 3 ? `<span class="tag">+${r.ingredients.length - 3}</span>` : ''}
+                    </div>
+                    <button class="button">View Recipe</button>
+                </div>
+            `).join('');
+            document.getElementById('recipe-list').innerHTML = html;
+        }
+
+        function renderHealth() {
+            const health = mockHealth.find(h => h.millet === currentHealth);
+            if (!health) return;
+            const html = `
+                <div class="card">
+                    <div class="card-title">${health.title}</div>
+                    <div class="card-subtitle">${health.millet}</div>
+                    <div style="font-size: 12px; color: #424242; margin-bottom: 12px; line-height: 1.5;">
+                        ${health.millet} is an excellent choice for health due to its unique nutritional profile and climate resilience.
+                    </div>
+                    <strong style="color: #558B2F; font-size: 12px;">Key Benefits</strong>
+                    <ul class="benefits-list">
+                        ${health.benefits.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                    <strong style="color: #558B2F; font-size: 12px; display: block; margin-top: 12px;">Scientific Facts</strong>
+                    ${health.facts.map(f => `<div class="scientific-fact">${f}</div>`).join('')}
+                    <div class="reading-time">📖 3-4 min read</div>
+                </div>
+            `;
+            document.getElementById('health-list').innerHTML = html;
+        }
+
+        function renderFPO() {
+            let filtered = currentDistrict === 'All' ? mockFPO : mockFPO.filter(f => f.location === currentDistrict);
+            const html = filtered.map(f => `
+                <div class="card">
+                    <div class="card-title">${f.name}</div>
+                    <div class="card-subtitle">${f.location}</div>
+                    <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">
+                        Established cooperative dedicated to quality millet production and sustainable farming.
+                    </p>
+                    <div>
+                        <strong style="font-size: 11px; color: #558B2F;">Specialties</strong>
+                        <div style="margin-top: 4px;">
+                            ${f.specialties.map(s => `<span class="fpo-badge">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="fpo-info">
+                        <strong>Certification:</strong> ${f.cert}<br>
+                        <strong>Contact:</strong> ${f.contact}
+                    </div>
+                    <button class="button" onclick="alert('Calling ' + '${f.contact}')">📞 Contact FPO</button>
+                </div>
+            `).join('');
+            document.getElementById('fpo-list').innerHTML = html;
+        }
+
+        function toggleSave(id) {
+            if (savedRecipes.includes(id)) {
+                savedRecipes = savedRecipes.filter(r => r !== id);
+            } else {
+                savedRecipes.push(id);
+            }
+            renderRecipes();
+        }
+
+        function searchRecipes(query) {
+            if (!query) {
+                renderRecipes();
+                return;
+            }
+            const filtered = mockRecipes.filter(r => 
+                r.name.toLowerCase().includes(query.toLowerCase()) || 
+                r.millet.toLowerCase().includes(query.toLowerCase())
+            );
+            const html = filtered.map(r => `
+                <div class="card">
+                    <div class="card-title">${r.name}</div>
+                    <div class="card-subtitle">${r.millet}</div>
+                    <p style="font-size: 12px; color: #424242; margin-bottom: 8px;">${r.desc}</p>
+                    <button class="button">View Recipe</button>
+                </div>
+            `).join('');
+            document.getElementById('recipe-list').innerHTML = html || '<p style="padding: 20px; text-align: center; color: #757575;">No recipes found</p>';
+        }
+
+        // Initial render
+        renderPrices();
+    </script>
+</body>
+</html>
