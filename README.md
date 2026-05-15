@@ -67,6 +67,23 @@ Open in Android Studio:
 
 ---
 
+## Features
+
+- Android demo app with Kotlin sources and resource examples.
+- Firebase-ready configuration (replace `app/google-services.json` with your project file).
+- Static demo pages (`index.html`, `demo.html`) that present sample data and usage examples.
+- Gradle Kotlin DSL build files and a ready-to-open Android Studio project.
+
+## Demo
+
+You can preview the project's static demos in the repository:
+
+- Demo page: https://github.com/Sakshi8365/sridhanyahub/blob/main/demo.html
+- Main demo/index: https://github.com/Sakshi8365/sridhanyahub/blob/main/index.html
+
+To view the HTML demo locally, open the `index.html` or `demo.html` file in a browser.
+
+
 ## Firebase
 
 - Firebase configuration file `google-services.json` should be placed inside `app/` for build-time injection of Firebase IDs and settings.
