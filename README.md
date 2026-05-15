@@ -15,6 +15,11 @@ This README provides everything needed to build, run and contribute to the proje
 
 ---
 
+## Purpose
+
+This project demonstrates a small Android application backed by static demo pages and sample data. It aims to showcase basic mobile features (data display, Firebase integration hooks, and a simple UI) and to serve as a reference template for students or developers learning Android + Firebase workflows.
+
+
 ## Quick Start
 
 Prerequisites:
