@@ -182,5 +182,3 @@ On Windows replace `./gradlew` with `gradlew.bat` or `.
 If you need help, open an issue in this repository or contact the maintainers listed in `PROJECT_REPORT.md`.
 
 ----
-
-_Generated and restored on 2026-05-15._
